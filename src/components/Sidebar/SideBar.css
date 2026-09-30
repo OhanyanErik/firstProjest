@@ -1,0 +1,51 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;
+  min-width: 0;
+  padding: 24px;
+}
+
+.nav-button {
+  text-decoration: none;
+}
+.sidebar{
+  width: 230px;
+  flex-shrink: 0;
+  padding: 24px 16px;
+  background: #1c2836;
+  color: white;
+}
+.sidebar-title {
+  margin-bottom: 32px;
+  font-size: 22px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: white;
+  text-align: left;
+}
+
+.nav-button:hover,
+.nav-button.active {
+  background: #40546b;
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+  }
+}

@@ -1,0 +1,29 @@
+.search-box{
+  display: flex;
+  align-items: center;
+  flex: start;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+.search-box>input{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px 12px 44px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.search-box > img{
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  pointer-events: none;
+  width: 15px;
+}
+.search-boxinput:focus {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}

@@ -1,0 +1,245 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgb(15 23 42 / 55%);
+  backdrop-filter: blur(7px);
+}
+
+.modal-content,
+.modal-contnet {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 36px;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgb(15 23 42 / 25%);
+  font-family: inherit;
+  animation: modal-appear 0.25s ease-out;
+}
+
+.modal .conteiner,
+.modal .input-style {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 24px;
+}
+
+.modal form > label {
+  align-self: end;
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.modal label span {
+  color: #e11d48;
+}
+
+.modal form > input,
+.modal form > textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 13px 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  outline: none;
+  background: #f8fafc;
+  color: #0f172a;
+  font: inherit;
+  font-size: 14px;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.modal input:hover,
+.modal textarea:hover {
+  border-color: #c4b5fd;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+  border-color: #8b5cf6;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgb(139 92 246 / 12%);
+}
+
+.modal input::placeholder,
+.modal textarea::placeholder {
+  color: #94a3b8;
+}
+
+.modal textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+
+.modal form > label:nth-of-type(1),
+.modal form > label:nth-of-type(2) {
+  grid-row: 1;
+}
+
+.modal form > input:nth-of-type(1),
+.modal form > input:nth-of-type(2) {
+  grid-row: 2;
+}
+
+.modal form > label:nth-of-type(3),
+.modal form > label:nth-of-type(4) {
+  grid-row: 3;
+}
+
+.modal form > input:nth-of-type(3),
+.modal form > input:nth-of-type(4) {
+  grid-row: 4;
+}
+
+.modal form > label:nth-of-type(5),
+.modal form > label:nth-of-type(6) {
+  grid-row: 5;
+}
+
+.modal form > input:nth-of-type(5),
+.modal form > input:nth-of-type(6) {
+  grid-row: 6;
+}
+
+.modal form > label:nth-of-type(7),
+.modal form > label:nth-of-type(8) {
+  grid-row: 7;
+}
+
+.modal form > input:nth-of-type(7),
+.modal form > input:nth-of-type(8) {
+  grid-row: 8;
+}
+
+
+.modal form > label:nth-of-type(9) {
+  grid-row: 9;
+  grid-column: 1 / -1;
+}
+
+.modal form > input:nth-of-type(9),
+.modal form > textarea {
+  grid-row: 10;
+  grid-column: 1 / -1;
+}
+
+.modal .form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 22px;
+  border-top: 1px solid #eef2f7;
+}
+
+.modal .form-actions button {
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.modal .form-actions button:first-child {
+  border-color: #e2e8f0;
+  background: #fff;
+  color: #475569;
+}
+
+.modal .form-actions button:last-child {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: white;
+  box-shadow: 0 6px 16px rgb(99 102 241 / 22%);
+}
+
+.modal .form-actions button:hover {
+  transform: translateY(-2px);
+}
+
+.modal .form-actions button:active {
+  transform: translateY(0);
+}
+
+.modal .form-actions button:focus-visible {
+  outline: 3px solid #a78bfa;
+  outline-offset: 3px;
+}
+
+@keyframes modal-appear {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .modal {
+    padding: 12px;
+  }
+
+  .modal-content,
+  .modal-contnet {
+    padding: 24px 20px;
+    border-radius: 18px;
+    max-height: 92vh;
+  }
+
+  .modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal form > label {
+    align-self: flex-start;
+  }
+
+  .modal .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal .form-actions button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal *,
+  .modal-content,
+  .modal-contnet {
+    animation: none;
+    transition: none;
+  }
+}
