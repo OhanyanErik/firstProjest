@@ -5,7 +5,7 @@ import "./AddApp.css";
 export default function AddApp(){
     return(
         <div className="conteiner">
-            <div className="input-style">
+            <div className="input-styles">
             <Formik initialValues={{ 
  "full-name": "",
   years: "",
@@ -48,7 +48,7 @@ export default function AddApp(){
                     
                     <label htmlFor="salary"> Salary Expectation <span>*</span> </label>
                     <Field name="salary" type="number" min="0.01" step="0.01"/>
-        <div className="form-actions">
+        <div className="buttons-style">
             <button>Cancel</button>
             <button>Submit Appilication</button>
         </div>

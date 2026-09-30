@@ -1,12 +1,12 @@
 
 
-.input-style form {
+.input-styles form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px 24px;
 }
 
-.input-style form > label {
+.input-styles form > label {
   align-self: end;
   margin: 0;
   color: #334155;
@@ -15,12 +15,12 @@
   letter-spacing: 0.2px;
 }
 
-.input-style label span {
+.input-styles label span {
   color: #e11d48;
 }
 
-.input-style form > input,
-.input-style form > textarea {
+.input-styles form > input,
+.input-styles form > textarea {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
@@ -39,82 +39,79 @@
     box-shadow 0.2s;
 }
 
-.input-style input:hover,
-.input-style textarea:hover {
+.input-styles input:hover,
+.input-styles textarea:hover {
   border-color: #c4b5fd;
 }
 
-.input-style input:focus,
-.input-style textarea:focus {
+.input-styles input:focus,
+.input-styles textarea:focus {
   border-color: #8b5cf6;
   background: #fff;
   box-shadow: 0 0 0 4px rgb(139 92 246 / 12%);
 }
 
-.input-style input::placeholder,
-.input-style textarea::placeholder {
+.input-styles input::placeholder,
+.input-styles textarea::placeholder {
   color: #94a3b8;
 }
 
-.input-style textarea {
+.input-styles textarea {
   min-height: 110px;
   resize: vertical;
 }
 
 
-.input-style form > label:nth-of-type(1),
-.input-style form > label:nth-of-type(2) {
+.input-styles form > label:nth-of-type(1),
+.input-styles form > label:nth-of-type(2) {
   grid-row: 1;
 }
 
-.input-style form > input:nth-of-type(1),
-.input-style form > input:nth-of-type(2) {
+.input-styles form > input:nth-of-type(1),
+.input-styles form > input:nth-of-type(2) {
   grid-row: 2;
 }
 
-.input-style form > label:nth-of-type(3),
-.input-style form > label:nth-of-type(4) {
+.input-styles form > label:nth-of-type(3),
+.input-styles form > label:nth-of-type(4) {
   grid-row: 3;
 }
 
-.input-style form > input:nth-of-type(3),
-.input-style form > input:nth-of-type(4) {
+.input-styles form > input:nth-of-type(3),
+.input-styles form > input:nth-of-type(4) {
   grid-row: 4;
 }
 
-.modal form > label:nth-of-type(5),
-.modal form > label:nth-of-type(6) {
-  grid-row: 5;
-}
 
-.input-style form > input:nth-of-type(5),
-.input-style form > input:nth-of-type(6) {
+
+.input-styles form > input:nth-of-type(5),
+.input-styles form > input:nth-of-type(6) {
   grid-row: 6;
 }
 
-.input-style form > label:nth-of-type(7),
-.input-style form > label:nth-of-type(8) {
+.input-styles form > label:nth-of-type(7),
+.input-styles form > label:nth-of-type(8) {
   grid-row: 7;
 }
 
-.input-style form > input:nth-of-type(7),
-.input-style form > input:nth-of-type(8) {
+.input-styles form > input:nth-of-type(7),
+.input-styles form > input:nth-of-type(8) {
   grid-row: 8;
 }
 
 
-.input-style form > label:nth-of-type(9) {
+.input-styles form > label:nth-of-type(9) {
   grid-row: 9;
   grid-column: 1 / -1;
 }
 
-.input-style form > input:nth-of-type(9),
-.input-style form > textarea {
+.input-styles form > input:nth-of-type(9),
+.input-styles form > textarea {
   grid-row: 10;
   grid-column: 1 / -1;
 }
 
-.input-style .form-actions {
+.input-styles .buttons-style {
   grid-column: 1 / -1;
   display: flex;
   justify-content: flex-end;
@@ -124,7 +121,7 @@
   border-top: 1px solid #eef2f7;
 }
 
-.input-style .form-actions button {
+.input-styles .buttons-style button {
   padding: 12px 22px;
   border: 1px solid transparent;
   border-radius: 12px;
@@ -135,45 +132,54 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.input-style .form-actions button:first-child {
+.input-styles .buttons-style button:first-child {
   border-color: #e2e8f0;
   background: #fff;
   color: #475569;
 }
 
 
-.input-style .form-actions button:last-child {
+.input-styles .buttons-style button:last-child {
   background: linear-gradient(135deg, #8b5cf6, #6366f1);
   color: white;
   box-shadow: 0 6px 16px rgb(99 102 241 / 22%);
 }
 
-.input-style .form-actions button:hover {
+.input-styles .buttons-style button:hover {
   transform: translateY(-2px);
 }
 
-.input-style .form-actions button:active {
+.input-styles .buttons-style button:active {
   transform: translateY(0);
 }
 
-.input-style .form-actions button:focus-visible {
+.input-styles .buttons-style button:focus-visible {
   outline: 3px solid #a78bfa;
   outline-offset: 3px;
 }
-  .input-style form {
+.submit-button{
+  background-color: #6366f1;
+  color: #e2e8f0;
+}
+
+
+ 
+  .input-styles form {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
 
-  .input-style form > label {
+  .input-styles form > label {
     align-self: flex-start;
   }
 
-  .input-style .form-actions {
+  .input-styles .buttons-style {
     flex-direction: column-reverse;
   }
 
-  .input-style .form-actions button {
+  .input-styles .buttons-style button {
     width: 100%;
   }
+
+
