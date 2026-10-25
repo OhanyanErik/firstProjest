@@ -19,7 +19,7 @@ export function applicationReducer(state = initialState, action) {
     case APPLICATION_ACTIONS.ADD_APPLICATION:
       return {
         ...state,
-        applications: [action.payload, ...state.applications],
+        applications: [...state.applications, action.payload],
       };
 
     case APPLICATION_ACTIONS.DELETE_APPLICATION:

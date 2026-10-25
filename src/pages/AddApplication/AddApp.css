@@ -1,47 +1,50 @@
-
+.input-styles {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
 
 .input-styles form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 24px;
+  gap: 16px 20px;
 }
 
-.input-styles form > label {
-  align-self: end;
-  margin: 0;
+.input-styles .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.input-styles .full-width {
+  grid-column: 1 / -1;
+}
+
+.input-styles label {
   color: #334155;
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.2px;
 }
 
 .input-styles label span {
   color: #e11d48;
 }
 
-.input-styles form > input,
-.input-styles form > textarea {
+.input-styles input,
+.input-styles textarea {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  margin: 0 0 12px;
-  padding: 13px 15px;
+  padding: 12px 14px;
   border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  border-radius: 10px;
   outline: none;
   background: #f8fafc;
   color: #0f172a;
   font: inherit;
   font-size: 14px;
-  transition:
-    border-color 0.2s,
-    background 0.2s,
-    box-shadow 0.2s;
-}
-
-.input-styles input:hover,
-.input-styles textarea:hover {
-  border-color: #c4b5fd;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
 .input-styles input:focus,
@@ -51,64 +54,16 @@
   box-shadow: 0 0 0 4px rgb(139 92 246 / 12%);
 }
 
-.input-styles input::placeholder,
-.input-styles textarea::placeholder {
-  color: #94a3b8;
-}
-
 .input-styles textarea {
   min-height: 110px;
   resize: vertical;
 }
 
-
-.input-styles form > label:nth-of-type(1),
-.input-styles form > label:nth-of-type(2) {
-  grid-row: 1;
-}
-
-.input-styles form > input:nth-of-type(1),
-.input-styles form > input:nth-of-type(2) {
-  grid-row: 2;
-}
-
-.input-styles form > label:nth-of-type(3),
-.input-styles form > label:nth-of-type(4) {
-  grid-row: 3;
-}
-
-.input-styles form > input:nth-of-type(3),
-.input-styles form > input:nth-of-type(4) {
-  grid-row: 4;
-}
-
-
-
-.input-styles form > input:nth-of-type(5),
-.input-styles form > input:nth-of-type(6) {
-  grid-row: 6;
-}
-
-.input-styles form > label:nth-of-type(7),
-.input-styles form > label:nth-of-type(8) {
-  grid-row: 7;
-}
-
-.input-styles form > input:nth-of-type(7),
-.input-styles form > input:nth-of-type(8) {
-  grid-row: 8;
-}
-
-
-.input-styles form > label:nth-of-type(9) {
-  grid-row: 9;
-  grid-column: 1 / -1;
-}
-
-.input-styles form > input:nth-of-type(9),
-.input-styles form > textarea {
-  grid-row: 10;
-  grid-column: 1 / -1;
+.input-styles .field-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .input-styles .buttons-style {
@@ -116,20 +71,19 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 10px;
-  padding-top: 22px;
+  margin-top: 6px;
+  padding-top: 18px;
   border-top: 1px solid #eef2f7;
 }
 
 .input-styles .buttons-style button {
-  padding: 12px 22px;
+  padding: 11px 20px;
   border: 1px solid transparent;
-  border-radius: 12px;
+  border-radius: 10px;
   font: inherit;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .input-styles .buttons-style button:first-child {
@@ -138,40 +92,19 @@
   color: #475569;
 }
 
-
 .input-styles .buttons-style button:last-child {
   background: linear-gradient(135deg, #8b5cf6, #6366f1);
-  color: white;
-  box-shadow: 0 6px 16px rgb(99 102 241 / 22%);
-}
-
-.input-styles .buttons-style button:hover {
-  transform: translateY(-2px);
-}
-
-.input-styles .buttons-style button:active {
-  transform: translateY(0);
+  color: #fff;
 }
 
 .input-styles .buttons-style button:focus-visible {
   outline: 3px solid #a78bfa;
   outline-offset: 3px;
 }
-.submit-button{
-  background-color: #6366f1;
-  color: #e2e8f0;
-}
 
-
- 
+@media (max-width: 600px) {
   .input-styles form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .input-styles form > label {
-    align-self: flex-start;
+    grid-template-columns: 1fr;
   }
 
   .input-styles .buttons-style {
@@ -181,5 +114,4 @@
   .input-styles .buttons-style button {
     width: 100%;
   }
-
-
+}

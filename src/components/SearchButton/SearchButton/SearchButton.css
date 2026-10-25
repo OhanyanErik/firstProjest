@@ -1,7 +1,7 @@
 .search-box{
   display: flex;
   align-items: center;
-  flex: start;
+  flex: 1 1 320px;
   position: relative;
   width: 100%;
   max-width: 600px;
@@ -23,7 +23,7 @@
   pointer-events: none;
   width: 15px;
 }
-.search-boxinput:focus {
+.search-box input:focus {
   outline: 2px solid #6366f1;
   outline-offset: 2px;
 }

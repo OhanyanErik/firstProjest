@@ -45,7 +45,28 @@
 }
 
 @media (max-width: 700px) {
+  .app-layout {
+    min-height: auto;
+  }
+
   .sidebar {
     width: 100%;
+    padding: 16px 20px;
+  }
+
+  .sidebar-title {
+    margin: 0 0 12px;
+    font-size: 20px;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-button {
+    flex: 1 1 140px;
+    text-align: center;
   }
 }

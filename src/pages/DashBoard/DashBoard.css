@@ -167,6 +167,11 @@
   color: #991b1b;
 }
 
+.cards strong {
+  font-size: 24px;
+  line-height: 1;
+}
+
 .search-bar{
   display: flex;
   align-items: center;
@@ -183,7 +188,7 @@
 .select-status>select{
    box-sizing: border-box;
    width: 230px;
-  padding: 12px 14px 12px 44px;
+  padding: 12px 14px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 16px;
@@ -196,10 +201,16 @@
 .select-newest>select{
   box-sizing: border-box;
   width: 270px;
-  padding: 12px 14px 12px 44px;
+  padding: 12px 14px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 16px;
+}
+
+.select-status > select:focus-visible,
+.select-newest > select:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
 }
 .error-message {
   margin-bottom: 16px;
@@ -302,6 +313,66 @@
   font-size: 13px;
 }
 
+.application-status {
+  padding: 5px 10px;
+  border: 1px solid #dbe3ef;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #475569;
+  font: inherit;
+  font-size: 12px;
+}
+
+.application-status:focus-visible {
+  outline: 3px solid #94b5ff;
+  outline-offset: 2px;
+}
+
+.confirm-delete-content h2 {
+  margin: 0 0 10px;
+  color: #1e293b;
+  font-size: 20px;
+}
+
+.confirm-delete-content p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.confirm-delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.modal .confirm-delete-actions button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal .confirm-delete-actions .cancel-button {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.modal .confirm-delete-actions .confirm-delete-button {
+  background: #dc2626;
+  color: #fff;
+}
+
+.modal .confirm-delete-actions button:focus-visible {
+  outline: 3px solid #94b5ff;
+  outline-offset: 3px;
+}
+
 .applications .info-2 {
   display: inline-flex;
   align-items: center;
@@ -346,8 +417,23 @@
   overflow-wrap: anywhere;
 }
 
+.applications .content-1 a {
+  color: #3567e8;
+  text-underline-offset: 3px;
+}
+
+.applications .content-1 a:focus-visible {
+  outline: 3px solid #94b5ff;
+  outline-offset: 3px;
+}
+
 .applications .content-1 p + p {
   margin-top: 5px;
+}
+
+.applications .application-date {
+  color: #64748b;
+  font-size: 12px;
 }
 
 .applications .content-2 {
@@ -416,9 +502,14 @@
 }
 .buttons-container {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+}
+
+.applications .buttons-container {
+  grid-column: 1 / -1;
+  justify-content: flex-end;
 }
 
 .buttons-container button {
@@ -481,5 +572,63 @@
   .buttons-container button {
     transition: none;
     transform: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .search-bar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-box,
+  .select-status,
+  .select-newest {
+    width: 100%;
+    max-width: none;
+  }
+
+  .select-status > select,
+  .select-newest > select {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .cards > div {
+    min-height: 110px;
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .cards div img {
+    width: 40px;
+  }
+
+  .applications .buttons-container {
+    justify-content: stretch;
+    gap: 8px;
+  }
+
+  .buttons-container button {
+    flex: 1 1 auto;
+    padding: 9px 12px;
   }
 }

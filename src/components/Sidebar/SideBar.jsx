@@ -8,11 +8,18 @@ export default function Sidebar() {
      <h2 className="sidebar-title">Job Tracker</h2>
    
      <nav className="sidebar-nav">
-       <NavLink to="/" end className="nav-button">
+       <NavLink
+         to="/"
+         end
+         className={({ isActive }) => `nav-button${isActive ? " active" : ""}`}
+       >
          Dashboard
        </NavLink>
    
-       <NavLink to="/AddApplication" className="nav-button">
+       <NavLink
+         to="/AddApplication"
+         className={({ isActive }) => `nav-button${isActive ? " active" : ""}`}
+       >
          Add Application
        </NavLink>
      </nav>

@@ -6,37 +6,107 @@ import outcame from "../../assets/outcome_transparent.gif";
 import rejection from "../../assets/rejection-bc.gif";
 import OpenModal from "../../OpenModal/OpenModal";
 import getCompanyLogo from "../../assets/GetLogo/GetLogo";
+import createApplication from "../../createApplication";
+import { APPLICATION_ACTIONS } from "../../reducer/applicationActions";
 import { useDispatch,useSelector } from "react-redux";
-import { useState,} from "react";
+import { useEffect, useState } from "react";
 
 
 
 import "./DashBoard.css";
 
+function getSafeCvUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
 export default function Dashboard() {
   const [modal, setModal] = useState(false);
+  const [modalMode, setModalMode] = useState("add");
+  const [activeApplication, setActiveApplication] = useState(null);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("newest");
+  const [pendingDeleteApplication, setPendingDeleteApplication] = useState(null);
   const dispatch = useDispatch();
   const applications = useSelector(
   (state) => state.applications.applications
 );
+
+  const normalizedSearch = search.trim().toLowerCase();
+  const visibleApplications = applications.filter((application) => {
+    const matchesSearch = [
+      application["full-name"],
+      application.position,
+      application.company,
+      application.email,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase()
+      .includes(normalizedSearch);
+
+    const matchesStatus =
+      statusFilter === "all" || application.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  }).sort((first, second) => {
+    const firstDate = Date.parse(first.createdAt || "");
+    const secondDate = Date.parse(second.createdAt || "");
+    const safeFirstDate = Number.isFinite(firstDate) ? firstDate : 0;
+    const safeSecondDate = Number.isFinite(secondDate) ? secondDate : 0;
+
+    return sortOrder === "oldest"
+      ? safeFirstDate - safeSecondDate
+      : safeSecondDate - safeFirstDate;
+  });
+
+  const countByStatus = (status) =>
+    applications.filter((application) => application.status === status).length;
+
+  useEffect(() => {
+    if (!pendingDeleteApplication) return undefined;
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") setPendingDeleteApplication(null);
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [pendingDeleteApplication]);
    
 
-  function addApplication(values) {
-    dispatch({ type: "ADD_APPLICATION", payload: values });
-    setModal(false);
+  function openAddModal() {
+    setActiveApplication(null);
+    setModalMode("add");
+    setModal(true);
   }
 
-  const viewApplication = (app) => {
-    dispatch({ type: "SET_APPLICATIONS", payload: app });
-          setModal(true);
-        }
-      
-  const editApplication = (app) => {
-    dispatch({ type: "UPDATE_APPLICATION", payload: app });
-    dispatch({ type: "SET_APPLICATIONS", payload: app });
+  function openApplicationModal(application, mode) {
+    setActiveApplication(application);
+    setModalMode(mode);
     setModal(true);
-  };
-  
+  }
+
+  function saveApplication(values) {
+    if (modalMode === "edit" && activeApplication) {
+      dispatch({
+        type: APPLICATION_ACTIONS.UPDATE_APPLICATION,
+        payload: { ...activeApplication, ...values },
+      });
+    } else {
+      dispatch({
+        type: APPLICATION_ACTIONS.ADD_APPLICATION,
+        payload: createApplication(values),
+      });
+    }
+    setModal(false);
+    setActiveApplication(null);
+  }
 
 
   return (
@@ -47,7 +117,7 @@ export default function Dashboard() {
           <p>Track your job applications and stay organized.</p>
         </div>
 
-        <button onClick={() => setModal(true)} className="add-button" type="button">
+        <button onClick={openAddModal} className="add-button" type="button">
           <span className="label">+ Add Application</span>
         <span className="gradient-container">
           <span className="gradient" />
@@ -55,61 +125,164 @@ export default function Dashboard() {
         </button>
       </header>
 
-      {modal && <OpenModal onClose={() => setModal(false)} onAdd={addApplication} />}
+      {modal && (
+        <OpenModal
+          onClose={() => {
+            setModal(false);
+            setActiveApplication(null);
+          }}
+          onSubmit={saveApplication}
+          application={activeApplication}
+          mode={modalMode}
+        />
+      )}
+
+      {pendingDeleteApplication && (
+        <div
+          className="modal"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setPendingDeleteApplication(null);
+            }
+          }}
+        >
+          <div
+            className="modal-content confirm-delete-content"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="delete-confirm-title"
+            aria-describedby="delete-confirm-description"
+          >
+            <h2 id="delete-confirm-title">Delete application?</h2>
+            <p id="delete-confirm-description">
+              Delete the application for {pendingDeleteApplication.position} at{" "}
+              {pendingDeleteApplication.company}? This cannot be undone.
+            </p>
+            <div className="confirm-delete-actions">
+              <button
+                type="button"
+                className="cancel-button"
+                autoFocus
+                onClick={() => setPendingDeleteApplication(null)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="confirm-delete-button"
+                onClick={() => {
+                  dispatch({
+                    type: APPLICATION_ACTIONS.DELETE_APPLICATION,
+                    payload: pendingDeleteApplication.id,
+                  });
+                  setPendingDeleteApplication(null);
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="cards">
         <div>
           <img src={checkGf} alt="checkgif" />
           <span>Total</span>
+          <strong>{applications.length}</strong>
         </div>
         <div>
           <img src={clock} alt="clockgif" />
           Pending
+          <strong>{countByStatus("Pending")}</strong>
         </div>
         <div>
           <img src={interw} alt="interw" />
           Interview
+          <strong>{countByStatus("Interview")}</strong>
         </div>
         <div>
           <img src={outcame} alt="accepted" />
           Accepted
+          <strong>{countByStatus("Accepted")}</strong>
         </div>
         <div>
           <img src={rejection} alt="rejectgif" />
           Rejected
+          <strong>{countByStatus("Rejected")}</strong>
         </div>
       </div>
 
       <div className="search-bar">
-        <Search />
+        <Search search={search} onSearchChange={setSearch} />
         <div className="select-status">
-          <select name="status" id="all-status">
-            <option value="">All Status</option>
+          <select
+            name="status"
+            id="all-status"
+            aria-label="Filter by status"
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value)}
+          >
+            <option value="all">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Interview">Interview</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
           </select>
         </div>
         <div className="select-newest">
-          <select name="Newest" id="newest-first">
-            <option value="">Newest First</option>
+          <select
+            name="sort-order"
+            id="newest-first"
+            aria-label="Sort applications by date"
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value)}
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
           </select>
         </div>
       </div> 
 
   <div className="applications">
   {!applications.length && <p>No applications yet.</p>}
+  {applications.length > 0 && visibleApplications.length === 0 && (
+    <p>No applications match your search and status filter.</p>
+  )}
 
-  {applications.map((app) => (
+  {visibleApplications.map((app) => (
     <div className="card" key={app.id}>
       <div className="avatar">{getCompanyLogo(app.company)}</div>
 
       <div className="info">
         <p>{app.position} — {app.company}</p>
-        <span className="info-1">Status</span>
+        <select
+          className="application-status"
+          aria-label={`Change status for ${app.position} at ${app.company}`}
+          value={app.status || "Pending"}
+          onChange={(event) =>
+            dispatch({
+              type: APPLICATION_ACTIONS.CHANGE_STATUS,
+              payload: { id: app.id, status: event.target.value },
+            })
+          }
+        >
+          <option value="Pending">Pending</option>
+          <option value="Interview">Interview</option>
+          <option value="Accepted">Accepted</option>
+          <option value="Rejected">Rejected</option>
+        </select>
       </div>
 
       <div className="content-1">
         <h3>{app["full-name"]}</h3>
-        <p>Email: {app.email}</p>
-        <p>Phone: {app.number}</p>
+        <p>Email: <a href={`mailto:${app.email}`}>{app.email}</a></p>
+        <p>Phone: <a href={`tel:${app.number}`}>{app.number}</a></p>
+        {app.createdAt && (
+          <p className="application-date">
+            Applied on: {new Date(app.createdAt).toLocaleDateString()}
+          </p>
+        )}
       </div>
 
       <div className="content-2">
@@ -117,24 +290,32 @@ export default function Dashboard() {
         {app.years != null && app.years !== "" && (
           <p>Experience: {app.years} years</p>
         )}
-        {app.url && <p>CV URL: {app.url}</p>}
+        {app.url && (
+          <p>
+            CV: {getSafeCvUrl(app.url) ? (
+              <a href={getSafeCvUrl(app.url)} target="_blank" rel="noreferrer">
+                Open CV
+              </a>
+            ) : (
+              app.url
+            )}
+          </p>
+        )}
         {app.letter && <p>Cover Letter: {app.letter}</p>}
       </div>
 
       <div className="buttons-container">
-        <button className="view-button" onClick={() => viewApplication(app)}>
+        <button className="view-button" onClick={() => openApplicationModal(app, "view")}>
           View
         </button>
 
-        <button className="edit-button" onClick={() => editApplication(app)}>
+        <button className="edit-button" onClick={() => openApplicationModal(app, "edit")}>
           Edit
         </button>
 
         <button
           className="delete-button"
-          onClick={() =>
-            dispatch({ type: "DELETE_APPLICATION", payload: app.id })
-          }
+          onClick={() => setPendingDeleteApplication(app)}
         >
           Delete
         </button>

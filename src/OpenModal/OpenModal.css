@@ -47,6 +47,13 @@
   min-width: 0;
 }
 
+.modal .field-error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .modal .full-width {
   grid-column: 1 / -1;
 }
