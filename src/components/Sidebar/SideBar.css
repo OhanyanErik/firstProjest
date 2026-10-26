@@ -12,6 +12,18 @@
 .nav-button {
   text-decoration: none;
 }
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+}
 .sidebar{
   width: 230px;
   flex-shrink: 0;
@@ -20,8 +32,11 @@
   color: white;
 }
 .sidebar-title {
-  margin-bottom: 32px;
-  font-size: 22px;
+  min-width: 0;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .sidebar-nav {
@@ -55,8 +70,12 @@
   }
 
   .sidebar-title {
-    margin: 0 0 12px;
+    margin: 0;
     font-size: 20px;
+  }
+
+  .sidebar-brand {
+    margin-bottom: 14px;
   }
 
   .sidebar-nav {

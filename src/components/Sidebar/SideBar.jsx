@@ -8,7 +8,10 @@ export default function Sidebar() {
   return (
     <div className="app-layout">
       <aside className="sidebar">
-     <h2 className="sidebar-title">{t("app.name")}</h2>
+     <div className="sidebar-brand">
+       <img className="brand-mark" src="/jobappmenegerlogo.svg" alt="Job Application Manager Logo" />
+       <h2 className="sidebar-title">{t("app.name")}</h2>
+     </div>
    
      <nav className="sidebar-nav">
        <NavLink
