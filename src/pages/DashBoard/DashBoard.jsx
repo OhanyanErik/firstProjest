@@ -7,6 +7,7 @@ import rejection from "../../assets/rejection-bc.gif";
 import OpenModal from "../../OpenModal/OpenModal";
 import getCompanyLogo from "../../assets/GetLogo/GetLogo";
 import createApplication from "../../createApplication";
+import { useLanguage } from "../../LanguageContext";
 import { APPLICATION_ACTIONS } from "../../reducer/applicationActions";
 import { useDispatch,useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -32,6 +33,16 @@ export default function Dashboard() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("newest");
   const [pendingDeleteApplication, setPendingDeleteApplication] = useState(null);
+  const [hidePersonalInfo] = useState(() => {
+    try {
+      return Boolean(
+        JSON.parse(localStorage.getItem("jobTrackerSettings") || "{}").hidePersonalInfo
+      );
+    } catch {
+      return false;
+    }
+  });
+  const { t, language } = useLanguage();
   const dispatch = useDispatch();
   const applications = useSelector(
   (state) => state.applications.applications
@@ -113,12 +124,12 @@ export default function Dashboard() {
     <>
       <header className="dashboard-header">
         <div>
-          <h1>Job Application Manager</h1>
-          <p>Track your job applications and stay organized.</p>
+          <h1>{t("dashboard.title")}</h1>
+          <p>{t("dashboard.description")}</p>
         </div>
 
         <button onClick={openAddModal} className="add-button" type="button">
-          <span className="label">+ Add Application</span>
+          <span className="label">{t("dashboard.add")}</span>
         <span className="gradient-container">
           <span className="gradient" />
         </span>
@@ -153,10 +164,12 @@ export default function Dashboard() {
             aria-labelledby="delete-confirm-title"
             aria-describedby="delete-confirm-description"
           >
-            <h2 id="delete-confirm-title">Delete application?</h2>
+            <h2 id="delete-confirm-title">{t("application.deleteTitle")}</h2>
             <p id="delete-confirm-description">
-              Delete the application for {pendingDeleteApplication.position} at{" "}
-              {pendingDeleteApplication.company}? This cannot be undone.
+              {t("application.deleteMessage", {
+                position: pendingDeleteApplication.position,
+                company: pendingDeleteApplication.company,
+              })}
             </p>
             <div className="confirm-delete-actions">
               <button
@@ -165,7 +178,7 @@ export default function Dashboard() {
                 autoFocus
                 onClick={() => setPendingDeleteApplication(null)}
               >
-                Cancel
+                {t("button.cancel")}
               </button>
               <button
                 type="button"
@@ -178,7 +191,7 @@ export default function Dashboard() {
                   setPendingDeleteApplication(null);
                 }}
               >
-                Delete
+                {t("button.delete")}
               </button>
             </div>
           </div>
@@ -188,27 +201,27 @@ export default function Dashboard() {
       <div className="cards">
         <div>
           <img src={checkGf} alt="checkgif" />
-          <span>Total</span>
+          <span>{t("stats.total")}</span>
           <strong>{applications.length}</strong>
         </div>
         <div>
           <img src={clock} alt="clockgif" />
-          Pending
+          {t("status.pending")}
           <strong>{countByStatus("Pending")}</strong>
         </div>
         <div>
           <img src={interw} alt="interw" />
-          Interview
+          {t("status.interview")}
           <strong>{countByStatus("Interview")}</strong>
         </div>
         <div>
           <img src={outcame} alt="accepted" />
-          Accepted
+          {t("status.accepted")}
           <strong>{countByStatus("Accepted")}</strong>
         </div>
         <div>
           <img src={rejection} alt="rejectgif" />
-          Rejected
+          {t("status.rejected")}
           <strong>{countByStatus("Rejected")}</strong>
         </div>
       </div>
@@ -219,35 +232,35 @@ export default function Dashboard() {
           <select
             name="status"
             id="all-status"
-            aria-label="Filter by status"
+            aria-label={t("filter.allStatus")}
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value)}
           >
-            <option value="all">All Status</option>
-            <option value="Pending">Pending</option>
-            <option value="Interview">Interview</option>
-            <option value="Accepted">Accepted</option>
-            <option value="Rejected">Rejected</option>
+            <option value="all">{t("filter.allStatus")}</option>
+            <option value="Pending">{t("status.pending")}</option>
+            <option value="Interview">{t("status.interview")}</option>
+            <option value="Accepted">{t("status.accepted")}</option>
+            <option value="Rejected">{t("status.rejected")}</option>
           </select>
         </div>
         <div className="select-newest">
           <select
             name="sort-order"
             id="newest-first"
-            aria-label="Sort applications by date"
+            aria-label={t("sort.newest")}
             value={sortOrder}
             onChange={(event) => setSortOrder(event.target.value)}
           >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
+            <option value="newest">{t("sort.newest")}</option>
+            <option value="oldest">{t("sort.oldest")}</option>
           </select>
         </div>
       </div> 
 
   <div className="applications">
-  {!applications.length && <p>No applications yet.</p>}
+  {!applications.length && <p>{t("empty.applications")}</p>}
   {applications.length > 0 && visibleApplications.length === 0 && (
-    <p>No applications match your search and status filter.</p>
+    <p>{t("empty.matches")}</p>
   )}
 
   {visibleApplications.map((app) => (
@@ -258,7 +271,7 @@ export default function Dashboard() {
         <p>{app.position} — {app.company}</p>
         <select
           className="application-status"
-          aria-label={`Change status for ${app.position} at ${app.company}`}
+          aria-label={t("application.changeStatus")}
           value={app.status || "Pending"}
           onChange={(event) =>
             dispatch({
@@ -267,57 +280,57 @@ export default function Dashboard() {
             })
           }
         >
-          <option value="Pending">Pending</option>
-          <option value="Interview">Interview</option>
-          <option value="Accepted">Accepted</option>
-          <option value="Rejected">Rejected</option>
+          <option value="Pending">{t("status.pending")}</option>
+          <option value="Interview">{t("status.interview")}</option>
+          <option value="Accepted">{t("status.accepted")}</option>
+          <option value="Rejected">{t("status.rejected")}</option>
         </select>
       </div>
 
       <div className="content-1">
         <h3>{app["full-name"]}</h3>
-        <p>Email: <a href={`mailto:${app.email}`}>{app.email}</a></p>
-        <p>Phone: <a href={`tel:${app.number}`}>{app.number}</a></p>
+        <p>{t("field.email")}: {hidePersonalInfo ? t("privacy.hidden") : <a href={`mailto:${app.email}`}>{app.email}</a>}</p>
+        <p>{t("field.phone")}: {hidePersonalInfo ? t("privacy.hidden") : <a href={`tel:${app.number}`}>{app.number}</a>}</p>
         {app.createdAt && (
           <p className="application-date">
-            Applied on: {new Date(app.createdAt).toLocaleDateString()}
+            {t("field.appliedOn")}: {new Date(app.createdAt).toLocaleDateString(language === "hy" ? "hy-AM" : "en-US")}
           </p>
         )}
       </div>
 
       <div className="content-2">
-        {app.salary && <p>Salary Expectation: {app.salary}</p>}
+        {app.salary && <p>{t("field.salary")}: {app.salary}</p>}
         {app.years != null && app.years !== "" && (
-          <p>Experience: {app.years} years</p>
+          <p>{t("field.experience")}: {app.years} {t("field.years")}</p>
         )}
         {app.url && (
           <p>
-            CV: {getSafeCvUrl(app.url) ? (
+            {t("field.cvUrl")}: {getSafeCvUrl(app.url) ? (
               <a href={getSafeCvUrl(app.url)} target="_blank" rel="noreferrer">
-                Open CV
+                {t("field.openCv")}
               </a>
             ) : (
               app.url
             )}
           </p>
         )}
-        {app.letter && <p>Cover Letter: {app.letter}</p>}
+        {app.letter && <p>{t("field.coverLetter")}: {app.letter}</p>}
       </div>
 
       <div className="buttons-container">
         <button className="view-button" onClick={() => openApplicationModal(app, "view")}>
-          View
+          {t("button.view")}
         </button>
 
         <button className="edit-button" onClick={() => openApplicationModal(app, "edit")}>
-          Edit
+          {t("button.edit")}
         </button>
 
         <button
           className="delete-button"
           onClick={() => setPendingDeleteApplication(app)}
         >
-          Delete
+          {t("button.delete")}
         </button>
       </div>
     </div>

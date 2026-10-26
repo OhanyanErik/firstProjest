@@ -101,6 +101,9 @@
   outline: 3px solid #a78bfa;
   outline-offset: 3px;
 }
+:root[data-theme="dark"] .input-styles label {
+  color: #fff !important;
+}
 
 @media (max-width: 600px) {
   .input-styles form {

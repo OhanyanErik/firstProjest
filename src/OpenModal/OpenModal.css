@@ -156,3 +156,6 @@
     flex-wrap: wrap;
   }
 }
+:root[data-theme="dark"] .modal label {
+  color: #fff !important;
+}

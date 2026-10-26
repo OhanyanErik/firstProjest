@@ -1,11 +1,14 @@
 import { NavLink } from "react-router-dom";
+import { useLanguage } from "../../LanguageContext";
 import "./SideBar.css";
 
 export default function Sidebar() {
+  const { t } = useLanguage();
+
   return (
     <div className="app-layout">
       <aside className="sidebar">
-     <h2 className="sidebar-title">Job Tracker</h2>
+     <h2 className="sidebar-title">{t("app.name")}</h2>
    
      <nav className="sidebar-nav">
        <NavLink
@@ -13,14 +16,20 @@ export default function Sidebar() {
          end
          className={({ isActive }) => `nav-button${isActive ? " active" : ""}`}
        >
-         Dashboard
+         {t("nav.dashboard")}
        </NavLink>
    
        <NavLink
          to="/AddApplication"
          className={({ isActive }) => `nav-button${isActive ? " active" : ""}`}
        >
-         Add Application
+         {t("nav.addApplication")}
+       </NavLink>
+       <NavLink
+         to="/Settings"
+         className={({ isActive }) => `nav-button${isActive ? " active" : ""}`}
+       >
+         {t("nav.settings")}
        </NavLink>
      </nav>
      </aside>

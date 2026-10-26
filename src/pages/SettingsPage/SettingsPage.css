@@ -1,0 +1,84 @@
+.setting-page {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.setting-page h1 {
+  margin-bottom: 8px;
+}
+
+.setting-page > p {
+  margin-bottom: 24px;
+  color: #64748b;
+}
+
+.settings-options {
+  display: grid;
+  gap: 14px;
+}
+
+.setting-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.setting-option span {
+  display: grid;
+  gap: 5px;
+}
+
+.setting-option small {
+  color: #64748b;
+}
+
+.setting-option input,
+.setting-option select {
+  accent-color: #6366f1;
+}
+
+.setting-option select {
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+}
+
+:root[data-theme="dark"] body {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+:root[data-theme="dark"] .setting-option,
+:root[data-theme="dark"] .applications .card {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+:root[data-theme="dark"] .setting-option small,
+:root[data-theme="dark"] .setting-page > p {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .setting-option select {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+:root[data-theme="dark"] .input-styles .form-field > label,
+:root[data-theme="dark"] .modal .form-field > label {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .setting-option {
+    padding: 15px;
+  }
+}
